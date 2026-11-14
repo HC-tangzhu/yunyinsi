@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>云隐寺 · 造景与透明</title>
+<title>云隐寺 · 求签房六术</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{width:100%;height:100%;overflow:hidden;background:#0b0e14;font-family:"PingFang SC","Microsoft YaHei",sans-serif;user-select:none;touch-action:none;}
@@ -43,33 +43,49 @@
   .loading .bar{width:160px;height:6px;background:#333;border-radius:3px;overflow:hidden;}
   .loading .bar i{display:block;height:100%;width:0;background:#ffd76a;transition:width .3s;}
   .lookhint{position:fixed;right:8px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.5);font-size:10px;writing-mode:vertical-rl;letter-spacing:2px;z-index:5;pointer-events:none;}
-  .modal-mask{position:fixed;inset:0;background:rgba(40,20,8,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:18px;}
+  .modal-mask{position:fixed;inset:0;background:rgba(40,20,8,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px;}
   .modal-mask.show{display:flex;}
-  .modal{background:#fff6e6;border:4px solid #c0392b;border-radius:20px;padding:18px;width:100%;max-width:340px;max-height:80vh;overflow-y:auto;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.35);animation:pop .22s ease-out;}
+  .modal{background:#fff6e6;border:4px solid #c0392b;border-radius:20px;padding:16px;width:100%;max-width:360px;max-height:82vh;overflow-y:auto;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.35);animation:pop .22s ease-out;}
   @keyframes pop{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
-  .modal h3{color:#c0392b;font-size:18px;margin-bottom:10px;}
-  .modal p{color:#7a4a2b;font-size:13px;line-height:1.7;margin-bottom:10px;}
+  .modal h3{color:#c0392b;font-size:17px;margin-bottom:8px;}
+  .modal p{color:#7a4a2b;font-size:13px;line-height:1.7;margin-bottom:8px;}
   .modal .qianwen{font-size:15px;font-weight:800;color:#a86b1c;margin:8px 0;}
-  .modal .jieda{background:#fdeccd;border-radius:12px;padding:10px;color:#7a4a2b;font-size:12px;line-height:1.7;text-align:left;}
-  .modal textarea{width:100%;height:64px;border:2px solid #d99a3a;border-radius:10px;padding:8px;font-size:13px;font-family:inherit;color:#7a4a2b;outline:none;resize:none;}
-  .modal .btns{display:flex;gap:8px;margin-top:12px;}
+  .modal .jieda{background:#fdeccd;border-radius:12px;padding:10px;color:#7a4a2b;font-size:12px;line-height:1.7;text-align:left;margin-top:6px;}
+  .modal textarea,.modal input[type=text]{width:100%;border:2px solid #d99a3a;border-radius:10px;padding:8px;font-size:13px;font-family:inherit;color:#7a4a2b;outline:none;resize:none;}
+  .modal textarea{height:60px;}
+  .modal .btns{display:flex;gap:8px;margin-top:10px;}
   .modal .btns button{flex:1;border:none;border-radius:11px;padding:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;}
   .btn-primary{background:#c0392b;color:#fff;box-shadow:0 4px 0 #8f2a20;}
   .btn-primary:active{transform:translateY(3px);box-shadow:0 1px 0 #8f2a20;}
   .btn-ghost{background:#e8d4b0;color:#7a4a2b;box-shadow:0 4px 0 #c8ae82;}
   .btn-ghost:active{transform:translateY(3px);box-shadow:0 1px 0 #c8ae82;}
-  .chat-log{height:170px;overflow-y:auto;background:#fdeccd;border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;margin-bottom:8px;text-align:left;}
+  .divine-menu{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0;}
+  .divine-menu button{background:#fdeccd;border:2px solid #d99a3a;border-radius:12px;padding:14px 6px;font-size:13px;font-weight:800;color:#7a4a2b;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:4px;}
+  .divine-menu button .ic{font-size:24px;}
+  .divine-menu button:active{background:#f2d9a8;}
+  .quiz-q{font-size:14px;font-weight:700;color:#7a4a2b;margin:10px 0;line-height:1.6;text-align:left;}
+  .quiz-opts{display:flex;flex-direction:column;gap:6px;}
+  .quiz-opts button{background:#fdeccd;border:2px solid #d99a3a;border-radius:10px;padding:10px;font-size:13px;font-weight:700;color:#7a4a2b;cursor:pointer;font-family:inherit;text-align:left;}
+  .quiz-opts button:active{background:#f2d9a8;}
+  .quiz-progress{font-size:11px;color:#b98a3e;margin-bottom:6px;}
+  .task-card{background:#fdeccd;border-radius:12px;padding:12px;margin:8px 0;text-align:left;}
+  .task-card .tname{font-size:14px;font-weight:800;color:#a86b1c;margin-bottom:6px;}
+  .task-card .tdesc{font-size:12px;color:#7a4a2b;line-height:1.5;}
+  .task-bar{height:10px;background:#e8d4b0;border-radius:5px;overflow:hidden;margin-top:8px;}
+  .task-bar i{display:block;height:100%;width:0;background:#5a9e4a;transition:width .3s;}
+  .chat-log{height:160px;overflow-y:auto;background:#fdeccd;border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;margin-bottom:8px;text-align:left;}
   .msg{max-width:82%;padding:7px 10px;border-radius:12px;font-size:12px;line-height:1.5;}
   .msg.bot{align-self:flex-start;background:#fff;color:#5a3218;border-bottom-left-radius:3px;}
   .msg.me{align-self:flex-end;background:#c0392b;color:#fff;border-bottom-right-radius:3px;}
   .chat-input-row{display:flex;gap:6px;}
   .chat-input-row input{flex:1;border:2px solid #d99a3a;border-radius:9px;padding:8px;font-size:13px;font-family:inherit;color:#7a4a2b;outline:none;}
   .chat-input-row button{border:none;background:#c0392b;color:#fff;border-radius:9px;padding:0 14px;font-weight:800;cursor:pointer;}
-  .qiantong{font-size:50px;display:inline-block;margin:6px 0;}
-  .qiantong.shake{animation:shake .5s ease-in-out;}
-  @keyframes shake{0%,100%{transform:rotate(0);}20%{transform:rotate(-12deg);}40%{transform:rotate(10deg);}60%{transform:rotate(-8deg);}80%{transform:rotate(6deg);}}
+  .copy-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:10px 0;}
+  .copy-grid button{background:#fdeccd;border:2px solid #d99a3a;border-radius:6px;padding:6px;font-size:14px;font-weight:700;color:#7a4a2b;cursor:pointer;font-family:inherit;}
+  .copy-grid button:disabled{background:#c0392b;color:#fff;}
 </style>
 </head>
+
 <body>
 <div id="app"></div>
 <div class="hud">
@@ -83,12 +99,15 @@
   <button id="btnMuyu" class="gold"><span class="ico">🪵</span>敲木鱼</button>
   <button id="btnBow"><span class="ico">🙏</span>跪拜</button>
   <button id="btnIncense"><span class="ico">🕯️</span>上香</button>
-  <button id="btnQian" class="green"><span class="ico">🎋</span>求签</button>
   <button id="btnNPC" class="green"><span class="ico">💬</span>交谈</button>
   <button id="btnWish" class="gold"><span class="ico">🌳</span>许愿</button>
+  <button id="btnRelease" class="green"><span class="ico">🐟</span>放生</button>
+  <button id="btnLight" class="gold"><span class="ico">🏮</span>供灯</button>
+  <button id="btnCopy" class="green"><span class="ico">📜</span>抄经</button>
+  <button id="btnDivine" class="gold"><span class="ico">🔮</span>问卜</button>
 </div>
 <div class="toast" id="toast"></div>
-<div class="loading" id="loading"><div class="lotus">🪷</div><p>正在布置道场…</p><div class="bar"><i id="loadBar"></i></div></div>
+<div class="loading" id="loading"><div class="lotus">🪷</div><p>正在推演天机…</p><div class="bar"><i id="loadBar"></i></div></div>
 <div class="modal-mask" id="mask"><div class="modal" id="modalBox"></div></div>
 
 <script type="importmap">
@@ -110,8 +129,6 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 app.appendChild(renderer.domElement);
-
-/* ================= 光照 ================= */
 scene.add(new THREE.HemisphereLight(0xfff4e0,0x88aa66,0.9));
 const sun=new THREE.DirectionalLight(0xfff0d0,1.3);
 sun.position.set(14,22,12); sun.castShadow=true;
@@ -120,7 +137,7 @@ Object.assign(sun.shadow.camera,{left:-30,right:30,top:30,bottom:-30,far:70});
 scene.add(sun);
 scene.add(new THREE.AmbientLight(0xffffff,0.3));
 
-/* ================= 材质工具 ================= */
+/* ================= 工具 ================= */
 const mat=(c,o={})=>new THREE.MeshStandardMaterial({color:c,flatShading:false,roughness:0.8,metalness:0.05,...o});
 const RED=0xc0392b,GOLD=0xe8b04a,WOOD=0xa8743e,CREAM=0xf6e7c8,GREEN=0x7fb069,DARK=0x5a3218,STONE=0xd8c6a0,SKIN=0xf7d27a,WALL=0xe8c87a;
 function box(w,h,d,c,x,y,z,p){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c));m.position.set(x,y,z);m.castShadow=m.receiveShadow=true;(p||scene).add(m);return m;}
@@ -138,11 +155,9 @@ function plaque(text,w,c,x,y,z,p){
   m.position.set(x,y,z);(p||scene).add(m);return m;
 }
 
-/* ================= 地面 ================= */
+/* ================= 场景 ================= */
 const ground=new THREE.Mesh(new THREE.CircleGeometry(40,64),mat(0x9cc286,{roughness:1}));
 ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
-
-/* ================= 院墙 ================= */
 function wallSeg(x1,z1,x2,z2){
   const dx=x2-x1,dz=z2-z1,len=Math.hypot(dx,dz);
   const g=new THREE.Group();g.position.set((x1+x2)/2,0,(z1+z2)/2);g.rotation.y=Math.atan2(dx,dz);scene.add(g);
@@ -152,50 +167,35 @@ function wallSeg(x1,z1,x2,z2){
 wallSeg(-26,32,-5,32); wallSeg(5,32,26,32);
 wallSeg(-26,32,-26,-30); wallSeg(26,32,26,-30);
 wallSeg(-26,-30,26,-30);
-
-/* ================= 山门 ================= */
 const gate=new THREE.Group();gate.position.set(0,0,32);scene.add(gate);
 for(const sx of [-1,1]){cyl(0.4,0.45,4.5,10,RED,sx*3,2.25,0,gate);box(0.9,0.5,0.9,STONE,sx*3,4.6,0,gate);}
 box(7.6,0.5,0.9,RED,0,4.9,0,gate);
 roof(5,1.4,2.2,RED,0,5.8,0,gate);
 plaque('云隐寺',3,'#3a2210',0,4.3,0.55,gate);
-
-/* ================= 石板路 ================= */
 for(let i=0;i<24;i++){box(2.8,0.06,1.2,STONE,0,0.03,30-i*1.3);}
 
-/* ================= 可透明建筑容器 ================= */
-const buildings=[]; // {group, walls:[mesh], roofs:[mesh], cx, cz, r}
-
-/* ================= 开门建筑（门常开） ================= */
+/* ================= 可透明建筑 ================= */
+const buildings=[];
 function houseWithDoor(w,d,h,wallColor,doorW,doorH,x,z,name,roofColor){
   const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);
   box(w+0.6,0.4,d+0.6,STONE,0,0.2,0,g);
-  const halfW=w/2, halfD=d/2;
-  const sideW=(w-doorW)/2;
+  const halfW=w/2, halfD=d/2, sideW=(w-doorW)/2;
   const walls=[];
-  // 后墙
   walls.push(box(w,h,0.3,wallColor,0,0.4+h/2,-halfD,g));
-  // 左墙、右墙
   walls.push(box(0.3,h,d,wallColor,-halfW,0.4+h/2,0,g));
   walls.push(box(0.3,h,d,wallColor,halfW,0.4+h/2,0,g));
-  // 正面：左右两段墙 + 门楣墙
   walls.push(box(sideW,h,0.3,wallColor,-(doorW/2+sideW/2),0.4+h/2,halfD,g));
   walls.push(box(sideW,h,0.3,wallColor,doorW/2+sideW/2,0.4+h/2,halfD,g));
   walls.push(box(doorW,h-doorH,0.3,wallColor,0,0.4+doorH+(h-doorH)/2,halfD,g));
-  // 门框
   box(doorW+0.3,0.25,0.35,0x6a3a1a,0,0.4+doorH,halfD,g);
   box(0.25,doorH+0.25,0.35,0x6a3a1a,-doorW/2,0.4+doorH/2,halfD,g);
   box(0.25,doorH+0.25,0.35,0x6a3a1a,doorW/2,0.4+doorH/2,halfD,g);
-  // 门槛
   box(doorW+0.2,0.12,0.5,0x8a5a2a,0,0.46,halfD,g);
-  // 门扇完全敞开（贴到两侧墙上，门洞全通）
   box(doorW/2-0.05,doorH-0.1,0.08,0x9a4a2a,-(doorW/2-0.15),0.4+doorH/2,halfD-0.15,g).rotation.y=Math.PI/2;
   box(doorW/2-0.05,doorH-0.1,0.08,0x9a4a2a,(doorW/2-0.15),0.4+doorH/2,halfD-0.15,g).rotation.y=-Math.PI/2;
-  // 屋顶
   const r1=roof(w+2,2,d+2,roofColor||RED,0,0.4+h+0.9,0,g);
   const r2=roof(w*0.7,1.6,d*0.7,roofColor||RED,0,0.4+h+2,0,g);
   sph(0.4,10,GOLD,0,0.4+h+2.7,0,g);
-  // 牌匾
   plaque(name,Math.min(3.5,doorW+0.6),'#3a2210',0,0.4+h-0.5,halfD+0.2,g);
   buildings.push({group:g,walls,roofs:[r1,r2],cx:x,cz:z,rx:w/2+1.5,rz:d/2+1.5,transparent:false});
   return g;
@@ -261,44 +261,26 @@ const hammer=new THREE.Group();hammer.position.set(0.9,1,0.15);hammer.rotation.z
 cyl(0.05,0.05,1,6,0xb08050,0,0,0,hammer).rotation.z=Math.PI/2;
 sph(0.17,10,0x8a5a2a,0.5,0,0,hammer);
 
-/* ================= 造景深化 ================= */
-// 经幢（中轴两侧）
+/* ================= 造景 ================= */
 function jingchuang(x,z){
   const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);
-  cyl(0.55,0.7,0.4,8,STONE,0,0.2,0,g);
-  cyl(0.32,0.32,2.2,8,0xe8d4b0,0,1.5,0,g);
-  cyl(0.45,0.45,0.18,8,0x6a4a2a,0,2.7,0,g);
-  sph(0.28,8,GOLD,0,3,0,g);
+  cyl(0.55,0.7,0.4,8,STONE,0,0.2,0,g);cyl(0.32,0.32,2.2,8,0xe8d4b0,0,1.5,0,g);
+  cyl(0.45,0.45,0.18,8,0x6a4a2a,0,2.7,0,g);sph(0.28,8,GOLD,0,3,0,g);
 }
 jingchuang(-6,28);jingchuang(6,28);jingchuang(-6,8);jingchuang(6,8);
-
-// 石灯笼
 function stoneLantern(x,z){
   const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);
-  cyl(0.35,0.45,0.3,6,STONE,0,0.15,0,g);
-  cyl(0.15,0.15,1.0,6,STONE,0,0.8,0,g);
-  box(0.6,0.5,0.6,STONE,0,1.4,0,g);
-  sph(0.1,6,0xffd76a,0,1.4,0.32,g);
-  roof(0.7,0.5,0.7,0x8a6a3a,0,1.9,0,g);
+  cyl(0.35,0.45,0.3,6,STONE,0,0.15,0,g);cyl(0.15,0.15,1.0,6,STONE,0,0.8,0,g);
+  box(0.6,0.5,0.6,STONE,0,1.4,0,g);sph(0.1,6,0xffd76a,0,1.4,0.32,g);roof(0.7,0.5,0.7,0x8a6a3a,0,1.9,0,g);
 }
 stoneLantern(-4,26);stoneLantern(4,26);stoneLantern(-4,12);stoneLantern(4,12);
 stoneLantern(-12,16);stoneLantern(12,16);stoneLantern(-14,-16);stoneLantern(14,-16);
-
-// 莲花座（池边）
 for(let i=0;i<6;i++){
   const a=i/6*Math.PI*2;const r=4.6;
   const g=new THREE.Group();g.position.set(16+Math.cos(a)*r,0,8+Math.sin(a)*r);scene.add(g);
-  for(let j=0;j<6;j++){
-    const pa=j/6*Math.PI*2;
-    const petal=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.4,6),mat(0xe87ab0));
-    petal.position.set(Math.cos(pa)*0.25,0.2,Math.sin(pa)*0.25);
-    petal.rotation.z=Math.cos(pa)*0.5;petal.rotation.x=Math.sin(pa)*0.5;
-    petal.castShadow=true;g.add(petal);
-  }
+  for(let j=0;j<6;j++){const pa=j/6*Math.PI*2;const petal=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.4,6),mat(0xe87ab0));petal.position.set(Math.cos(pa)*0.25,0.2,Math.sin(pa)*0.25);petal.rotation.z=Math.cos(pa)*0.5;petal.rotation.x=Math.sin(pa)*0.5;petal.castShadow=true;g.add(petal);}
   sph(0.12,8,GOLD,0,0.25,0,g);
 }
-
-// 松柏（锥形树）
 function pine(x,z,s=1){
   const g=new THREE.Group();g.position.set(x,0,z);g.scale.setScalar(s);scene.add(g);
   cyl(0.2,0.25,1.5,6,0x6a4a2a,0,0.75,0,g);
@@ -307,27 +289,18 @@ function pine(x,z,s=1){
 function tree(x,z,s=1){
   const g=new THREE.Group();g.position.set(x,0,z);g.scale.setScalar(s);scene.add(g);
   cyl(0.22,0.3,1.8,6,0x7a5c3e,0,0.9,0,g);
-  sph(1.2,8,GREEN,0,2.6,0,g);
-  sph(0.9,8,0x8fc47a,0.7,3,0.4,g);
-  sph(0.8,8,GREEN,-0.7,2.9,-0.3,g);
+  sph(1.2,8,GREEN,0,2.6,0,g);sph(0.9,8,0x8fc47a,0.7,3,0.4,g);sph(0.8,8,GREEN,-0.7,2.9,-0.3,g);
 }
-// 阔叶树沿墙
 tree(-22,26,1.3);tree(22,26,1.2);tree(-22,-20,1.4);tree(22,-20,1.3);
 tree(-14,-26,1.1);tree(14,-26,1.2);tree(-24,12,1.2);tree(24,12,1.1);
-// 松柏
 pine(-10,30,1.1);pine(10,30,1.1);pine(-22,4,1.2);pine(24,4,1.1);
 pine(-16,-24,1.3);pine(16,-24,1.2);pine(-10,-24,1.1);pine(10,-26,1.2);
-
-// 幡旗（大殿前）
 function banner(x,z,color){
   const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);
   cyl(0.05,0.05,3.5,6,WOOD,0,1.75,0,g);
-  const flag=box(0.4,1.2,0.02,color,0,2.8,0,g);
-  flag.material.side=THREE.DoubleSide;
+  const flag=box(0.4,1.2,0.02,color,0,2.8,0,g);flag.material.side=THREE.DoubleSide;
 }
 banner(-5,4,0xe8452b);banner(5,4,0xffd76a);banner(-5,10,0x5a9e4a);banner(5,10,0xd84a3a);
-
-// 假山石（池边）
 function rock(x,z,s=1){
   const g=new THREE.Group();g.position.set(x,0,z);g.scale.setScalar(s);scene.add(g);
   const r1=new THREE.Mesh(new THREE.DodecahedronGeometry(0.8),mat(0x8a7a6a));r1.position.y=0.6;r1.castShadow=true;g.add(r1);
@@ -335,24 +308,25 @@ function rock(x,z,s=1){
   const r3=new THREE.Mesh(new THREE.DodecahedronGeometry(0.4),mat(0x7a6a5a));r3.position.set(-0.4,0.35,-0.3);r3.castShadow=true;g.add(r3);
 }
 rock(10,14,1.2);rock(22,14,1.0);rock(12,0,1.1);
-
-// 蒲团排（殿前跪拜位）
 for(let i=0;i<3;i++){cyl(0.55,0.65,0.15,16,0xd85a3a,-2+i*2,0.08,6);}
-
-// 小香炉（中轴两侧）
 function smallCenser(x,z){
   const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);
-  cyl(0.35,0.4,0.35,10,0xa8743e,0,0.18,0,g);
-  cyl(0.42,0.42,0.08,10,0xc08a4e,0,0.4,0,g);
-  cyl(0.015,0.015,0.5,4,0x6a3a1a,0,0.6,0,g);
-  sph(0.03,4,0xff5533,0,0.88,0,g);
+  cyl(0.35,0.4,0.35,10,0xa8743e,0,0.18,0,g);cyl(0.42,0.42,0.08,10,0xc08a4e,0,0.4,0,g);
+  cyl(0.015,0.015,0.5,4,0x6a3a1a,0,0.6,0,g);sph(0.03,4,0xff5533,0,0.88,0,g);
 }
 smallCenser(-3,14);smallCenser(3,14);
-
-// 香道石板（带纹路）
 for(let i=0;i<24;i+=2){box(2.6,0.07,1.1,0xd0bea0,0,0.04,28-i*1.3);}
 
-/* ================= 灯笼 ================= */
+/* 供灯 */
+const lampSlots=[];
+for(let i=0;i<5;i++){
+  const x=-4+i*2;
+  const g=new THREE.Group();g.position.set(x,0.6,10);scene.add(g);
+  cyl(0.12,0.15,0.3,8,GOLD,0,0,0,g);
+  const flame=sph(0.12,8,0x555555,0,0.3,0,g);flame.visible=false;
+  lampSlots.push({group:g,flame,lit:false});
+}
+/* 灯笼 */
 const lanterns=[];
 function lantern(x,z){
   const g=new THREE.Group();g.position.set(x,0,z);scene.add(g);
@@ -364,7 +338,7 @@ function lantern(x,z){
 }
 lantern(-4,30);lantern(4,30);lantern(-7,14);lantern(7,14);lantern(-18,10);lantern(18,14);
 
-/* ================= 人物构建（精细+辨识度） ================= */
+/* ================= 人物 ================= */
 const npcs=[];
 function buildHead(g,skin,opts={}){
   const head=sph(0.4,24,skin,0,1.5,0,g);head.scale.set(1,1.05,1);
@@ -376,12 +350,10 @@ function buildHead(g,skin,opts={}){
   const sm=new THREE.Mesh(new THREE.TorusGeometry(0.075,0.018,6,12,Math.PI),mat(opts.mouthColor||0x8a3a2a));
   sm.position.set(0,1.36,0.37);sm.rotation.z=Math.PI;g.add(sm);
   for(const dx of [-1,1]){const bl=sph(0.06,8,0xf08a6b,dx*0.24,1.4,0.32,g);bl.material.transparent=true;bl.material.opacity=0.5;bl.scale.set(1,0.7,0.4);}
-  return head;
 }
 function makeMonk(x,z,rotY,opts={}){
   const g=new THREE.Group();g.position.set(x,0,z);g.rotation.y=rotY;scene.add(g);
-  const robeColor=opts.robe||0xd8621e;
-  g.scale.setScalar(opts.scale||1);
+  const robeColor=opts.robe||0xd8621e;g.scale.setScalar(opts.scale||1);
   if(opts.pose!=='sit'){for(const dx of [-0.15,0.15]){const f=sph(0.13,10,0x5a3218,dx,0.1,0.05,g);f.scale.set(1,0.6,1.4);}}
   const body=sph(0.5,20,robeColor,0,0.75,0,g);body.scale.set(1,1.15,0.95);
   const shoulders=sph(0.52,18,robeColor,0,1.05,0,g);shoulders.scale.set(1.1,0.4,1);
@@ -393,20 +365,18 @@ function makeMonk(x,z,rotY,opts={}){
   if(opts.beard){const beard=sph(0.22,12,0xf0f0f0,0,1.25,0.34,g);beard.scale.set(1,1.3,0.5);}
   if(opts.hat){const hat=new THREE.Mesh(new THREE.ConeGeometry(0.55,0.3,12),mat(0xd99a3a));hat.position.set(0,1.9,0);hat.castShadow=true;g.add(hat);}
   if(opts.pose==='pray'){const hands=sph(0.17,12,SKIN,0,0.85,0.42,g);hands.scale.set(1.2,1.5,0.6);}
-  else if(opts.pose==='sweep'){const b=new THREE.Group();b.position.set(0.5,0.5,0.3);b.rotation.z=-0.4;g.add(b);cyl(0.03,0.03,1.4,6,0x8a6a3a,0,0,0,b);box(0.3,0.4,0.15,0xd99a3a,0,-0.8,0,b);for(let i=0;i<5;i++)box(0.04,0.4,0.04,0xa87a3a,-0.1+i*0.05,-0.9,0,b);}
+  else if(opts.pose==='sweep'){const b=new THREE.Group();b.position.set(0.5,0.5,0.3);b.rotation.z=-0.4;g.add(b);cyl(0.03,0.03,1.4,6,0x8a6a3a,0,0,0,b);box(0.3,0.4,0.15,0xd99a3a,0,-0.8,0,b);}
   else if(opts.pose==='sit'){const l=sph(0.6,16,robeColor,0,0.25,0,g);l.scale.set(1.3,0.4,1);for(const dx of [-0.35,0.35])sph(0.14,10,SKIN,dx,0.45,0.35,g);}
-  const data={group:g,pos:new THREE.Vector3(x,0,z),name:opts.name||'小和尚',walk:opts.walk||null,walkT:Math.random()*6};
+  const data={group:g,pos:new THREE.Vector3(x,0,z),name:opts.name||'小和尚',walk:opts.walk||null,walkT:Math.random()*6,isDiviner:opts.isDiviner||false};
   npcs.push(data);return data;
 }
 function makeWorshipper(x,z,rotY,opts={}){
   const g=new THREE.Group();g.position.set(x,0,z);g.rotation.y=rotY;scene.add(g);
-  const c=opts.color||0x3a7bd5;
-  g.scale.setScalar(opts.scale||1);
+  const c=opts.color||0x3a7bd5;g.scale.setScalar(opts.scale||1);
   for(const dx of [-0.13,0.13]){const f=sph(0.11,10,0x3a2210,dx,0.1,0.05,g);f.scale.set(1,0.6,1.3);}
   const body=sph(0.45,20,c,0,0.72,0,g);body.scale.set(1,1.15,0.95);
   const shoulders=sph(0.46,18,c,0,1.0,0,g);shoulders.scale.set(1.1,0.4,1);
-  box(0.5,0.1,0.05,0xffffff,0,0.9,0.43,g);
-  box(0.6,0.08,0.5,0x3a2210,0,0.6,0,g).scale.set(1,1,0.6);
+  box(0.5,0.1,0.05,0xffffff,0,0.9,0.43,g);box(0.6,0.08,0.5,0x3a2210,0,0.6,0,g).scale.set(1,1,0.6);
   for(const dx of [-1,1]){const arm=cyl(0.1,0.12,0.5,10,c,dx*0.42,0.85,0.05,g);arm.rotation.z=dx*0.2;sph(0.1,10,SKIN,dx*0.5,0.6,0.05,g);}
   buildHead(g,SKIN,{});
   if(opts.hair==='bun'){const hair=sph(0.41,18,0x2a1a10,0,1.56,-0.05,g);hair.scale.set(1,0.9,1);sph(0.15,10,0x2a1a10,0,1.9,-0.05,g);}
@@ -418,7 +388,6 @@ function makeWorshipper(x,z,rotY,opts={}){
   npcs.push(data);return data;
 }
 
-// NPC 放置
 makeMonk(2,30,Math.PI,{name:'迎客僧·慧明',pose:'pray',robe:0xe87a2a,scale:1.05});
 makeMonk(-2,30,Math.PI,{name:'迎客僧·慧觉',pose:'pray',robe:0xd8621e});
 makeMonk(-10,24,0,{name:'扫地僧·苦行',pose:'sweep',robe:0x8a6a3a,eyes:'closed',hat:true,scale:0.95,walk:{x1:-10,z1:24,x2:-10,z2:10,speed:1.0}});
@@ -430,7 +399,7 @@ makeMonk(0,-2,0,{name:'打坐僧·禅心',pose:'sit',robe:0xd99a3a,eyes:'closed'
 makeMonk(2,-2,0,{name:'诵经僧·慧远',pose:'sit',robe:0x5a9e4a,eyes:'closed',scale:0.98});
 makeMonk(-2,-2,0,{name:'诵经僧·慧深',pose:'sit',robe:0x3a8a4a,eyes:'closed'});
 makeWorshipper(0,2,0,{name:'虔诚信徒·王居士',color:0xd84a3a,pose:'pray'});
-makeMonk(-18,4,0,{name:'解签僧·玄机',pose:'pray',robe:0x8a3a7a,beard:true,eyes:'closed',scale:1.02});
+makeMonk(-18,4,0,{name:'解签僧·玄机',pose:'pray',robe:0x8a3a7a,beard:true,eyes:'closed',scale:1.02,isDiviner:true});
 makeWorshipper(-16,7,Math.PI*0.5,{name:'求签香客·刘姑娘',color:0xe8458a,hair:'braid',pose:'pray'});
 makeWorshipper(14,10,Math.PI*0.5,{name:'喂鱼香客·陈伯',color:0xe8b04a,hair:'turban',turbanColor:0xa87a3a,scale:0.95});
 makeWorshipper(8,16,Math.PI,{name:'散步居士·赵先生',color:0x5a9e4a,walk:{x1:8,z1:16,x2:22,z2:16,speed:1.2}});
@@ -453,8 +422,6 @@ shadowMesh.rotation.x=-Math.PI/2;shadowMesh.position.y=0.01;player.add(shadowMes
 /* ================= 状态 ================= */
 const state={pos:new THREE.Vector3(0,0,28),yaw:0,camYaw:0,camPitch:0.3,camDist:4.5,speed:4.0,moving:false,walkT:0};
 const LOOK_X=0.0075,LOOK_Y=0.0055;
-
-/* ================= 摇杆 ================= */
 const joyEl=document.getElementById('joystick'),stickEl=document.getElementById('stick');
 let joyActive=false,joyX=0,joyY=0,joyId=null;
 function updateJoy(t){
@@ -468,14 +435,10 @@ function updateJoy(t){
 joyEl.addEventListener('touchstart',e=>{e.preventDefault();joyActive=true;joyId=e.changedTouches[0].identifier;updateJoy(e.changedTouches[0]);},{passive:false});
 joyEl.addEventListener('touchmove',e=>{if(!joyActive)return;for(const t of e.changedTouches)if(t.identifier===joyId)updateJoy(t);},{passive:false});
 joyEl.addEventListener('touchend',e=>{for(const t of e.changedTouches)if(t.identifier===joyId){joyActive=false;joyX=joyY=0;stickEl.style.transform='translate(0,0)';}});
-
-/* ================= 滑屏转视角 ================= */
 let lookId=null,lastLX=0,lastLY=0;
 renderer.domElement.addEventListener('touchstart',e=>{for(const t of e.changedTouches)if(t.clientX>innerWidth*0.42&&lookId===null){lookId=t.identifier;lastLX=t.clientX;lastLY=t.clientY;}},{passive:false});
 renderer.domElement.addEventListener('touchmove',e=>{for(const t of e.changedTouches)if(t.identifier===lookId){const dx=t.clientX-lastLX,dy=t.clientY-lastLY;state.camYaw-=dx*LOOK_X;state.camPitch=Math.max(-0.1,Math.min(0.9,state.camPitch-dy*LOOK_Y));lastLX=t.clientX;lastLY=t.clientY;}},{passive:false});
 renderer.domElement.addEventListener('touchend',e=>{for(const t of e.changedTouches)if(t.identifier===lookId)lookId=null;});
-
-/* 电脑 */
 const keys={};
 addEventListener('keydown',e=>keys[e.code]=true);
 addEventListener('keyup',e=>keys[e.code]=false);
@@ -483,25 +446,23 @@ let mouseDown=false;
 renderer.domElement.addEventListener('mousedown',()=>mouseDown=true);
 addEventListener('mouseup',()=>mouseDown=false);
 addEventListener('mousemove',e=>{if(mouseDown){state.camYaw-=e.movementX*0.004;state.camPitch=Math.max(-0.1,Math.min(0.9,state.camPitch-e.movementY*0.003));}});
-
-/* ================= 小地图折叠 ================= */
 const minimapEl=document.getElementById('minimap');
 document.getElementById('mapToggle').addEventListener('click',()=>minimapEl.classList.remove('hide'));
-minimapEl.addEventListener('click',e=>{
-  if(e.target.id==='mapToggle')return;
-  if(!minimapEl.classList.contains('hide'))minimapEl.classList.add('hide');
-});
+minimapEl.addEventListener('click',e=>{if(e.target.id==='mapToggle')return;if(!minimapEl.classList.contains('hide'))minimapEl.classList.add('hide');});
 
 /* ================= 交互点 ================= */
 const POINTS={
-  muyu:{pos:new THREE.Vector3(-6,0,18),r:2.8,btn:'btnMuyu'},
-  censer:{pos:new THREE.Vector3(0,0,18),r:2.8,btn:'btnIncense'},
+  muyu:{pos:new THREE.Vector3(-6,0,18),r:3.0,btn:'btnMuyu'},
+  censer:{pos:new THREE.Vector3(0,0,18),r:3.0,btn:'btnIncense'},
   buddha:{pos:new THREE.Vector3(0,0,-5),r:4.0,btn:'btnBow'},
-  qian:{pos:new THREE.Vector3(-18,0,4),r:3.5,btn:'btnQian'},
-  wish:{pos:new THREE.Vector3(0,0,-24),r:4.0,btn:'btnWish'},
+  wish:{pos:new THREE.Vector3(6,0,-22),r:4.5,btn:'btnWish'},
+  release:{pos:new THREE.Vector3(16,0,12),r:3.5,btn:'btnRelease'},
+  light:{pos:new THREE.Vector3(0,0,10),r:3.0,btn:'btnLight'},
+  copy:{pos:new THREE.Vector3(-18,0,7),r:2.5,btn:'btnCopy'},
+  divine:{pos:new THREE.Vector3(-18,0,4),r:3.5,btn:'btnDivine'},
 };
 const btnEls={};
-['btnMuyu','btnBow','btnIncense','btnQian','btnNPC','btnWish'].forEach(id=>btnEls[id]=document.getElementById(id));
+['btnMuyu','btnBow','btnIncense','btnNPC','btnWish','btnRelease','btnLight','btnCopy','btnDivine'].forEach(id=>btnEls[id]=document.getElementById(id));
 let nearNPC=null;
 function updateInteraction(){
   let near=null,nearDist=Infinity,nearBtn=null;
@@ -509,15 +470,15 @@ function updateInteraction(){
   for(const id in btnEls)btnEls[id].classList.remove('show');
   if(nearBtn)btnEls[nearBtn].classList.add('show');
   nearNPC=null;let npcDist=Infinity;
-  for(const n of npcs){const d=Math.hypot(state.pos.x-n.pos.x,state.pos.z-n.pos.z);if(d<2.8&&d<npcDist){nearNPC=n;npcDist=d;}}
+  for(const n of npcs){const d=Math.hypot(state.pos.x-n.pos.x,state.pos.z-n.pos.z);if(d<3.2&&d<npcDist){nearNPC=n;npcDist=d;}}
   if(nearNPC)btnEls['btnNPC'].classList.add('show');
 }
 
 /* ================= 功德 ================= */
 const LEVELS=[{n:'小沙弥',min:0},{n:'比丘',min:50},{n:'罗汉',min:150},{n:'菩萨',min:400},{n:'佛陀',min:1000}];
-let merit=parseInt(localStorage.getItem('ym_v8_merit')||'0');
+let merit=parseInt(localStorage.getItem('ym_v11_merit')||'0');
 const meritNumEl=document.getElementById('meritNum'),titleNameEl=document.getElementById('titleName');
-function refreshHUD(){meritNumEl.textContent=merit;let t=LEVELS[0];for(const L of LEVELS)if(merit>=L.min)t=L;titleNameEl.textContent=t.n;localStorage.setItem('ym_v8_merit',merit);}
+function refreshHUD(){meritNumEl.textContent=merit;let t=LEVELS[0];for(const L of LEVELS)if(merit>=L.min)t=L;titleNameEl.textContent=t.n;localStorage.setItem('ym_v11_merit',merit);}
 refreshHUD();
 function addMerit(n){merit+=n;refreshHUD();}
 
@@ -537,19 +498,25 @@ function showModal(html){modalBox.innerHTML=html;maskEl.classList.add('show');}
 function closeModal(){maskEl.classList.remove('show');modalBox.innerHTML='';}
 maskEl.addEventListener('click',e=>{if(e.target===maskEl)closeModal();});
 
-/* ================= 交互行为 ================= */
-btnEls['btnMuyu'].addEventListener('click',()=>{playDong();addMerit(1);hammer.rotation.z=-0.9;setTimeout(()=>hammer.rotation.z=-0.4,150);muyuBody.scale.set(1.12,0.78,1.12);setTimeout(()=>muyuBody.scale.set(1,0.85,1),120);const s=worldToScreen(new THREE.Vector3(-6,1.2,18));floatAt(s.x,s.y,'功德 +1','#ffd76a');});
-btnEls['btnBow'].addEventListener('click',()=>{playChime();addMerit(3);halo.material.emissiveIntensity=2;setTimeout(()=>halo.material.emissiveIntensity=0.6,700);const s=worldToScreen(new THREE.Vector3(0,3,-5));floatAt(s.x,s.y,'诚心 +3','#ffe08a');toast('🙏 诚心叩拜，佛光普照');});
-btnEls['btnIncense'].addEventListener('click',()=>{
-  showModal(`<h3>🕯️ 上香祈福</h3><p>写下心愿，香烟替你传达…</p><textarea id="wi" placeholder="愿家人平安健康…"></textarea><div class="btns"><button class="btn-ghost" id="c">取消</button><button class="btn-primary" id="o">上香</button></div>`);
-  document.getElementById('c').onclick=closeModal;
-  document.getElementById('o').onclick=()=>{const w=document.getElementById('wi').value.trim();playChime();addMerit(2);closeModal();toast(w?'🕯️ 心愿已随香烟上达':'🕯️ 上香完毕，功德+2');};
-});
-btnEls['btnWish'].addEventListener('click',()=>{
-  showModal(`<h3>🌳 许愿</h3><p>写下心愿，系上红绸带…</p><textarea id="w2" placeholder="愿…"></textarea><div class="btns"><button class="btn-ghost" id="c2">取消</button><button class="btn-primary" id="o2">系上</button></div>`);
-  document.getElementById('c2').onclick=closeModal;
-  document.getElementById('o2').onclick=()=>{playChime();addMerit(2);closeModal();toast('🌳 红绸已系上，愿你所求皆如愿');};
-});
+/* ================= 求签房六术 ================= */
+const DIVINE_MENU=[
+  {key:'qian',icon:'🎋',name:'求签'},
+  {key:'gua',icon:'☯️',name:'算卦'},
+  {key:'face',icon:'👤',name:'看相'},
+  {key:'dream',icon:'💭',name:'解梦'},
+  {key:'star',icon:'⭐',name:'星象'},
+  {key:'mbti',icon:'🧩',name:'人格'},
+];
+function openDivineMenu(){
+  let html=`<h3>🧘 解签僧·玄机</h3><p>施主想以何术问天机？</p><div class="divine-menu">`;
+  for(const d of DIVINE_MENU){html+=`<button data-k="${d.key}"><span class="ic">${d.icon}</span>${d.name}</button>`;}
+  html+=`</div><div class="btns"><button class="btn-ghost" id="dmClose">离开</button></div>`;
+  showModal(html);
+  document.getElementById('dmClose').onclick=closeModal;
+  modalBox.querySelectorAll('.divine-menu button').forEach(b=>{
+    b.onclick=()=>{const k=b.dataset.k;if(k==='qian')divineQian();else if(k==='gua')divineGua();else if(k==='face')divineFace();else if(k==='dream')divineDream();else if(k==='star')divineStar();else if(k==='mbti')divineMBTI();};
+  });
+}
 const QIANS=[
   {t:'上上签',wen:'云开见月明，前程自坦平',jd:'心诚则灵，眼下困惑终会散去。保持耐心，善缘自来。'},
   {t:'上签',wen:'春风化雨润无声，善念常存福自生',jd:'多行小善，福报在不经意间积累。'},
@@ -558,23 +525,243 @@ const QIANS=[
   {t:'下签',wen:'雾锁重楼，且待晴时',jd:'近期或有小波折，守心待时，坏运自会过去。'},
   {t:'上上签',wen:'一念放下，万般自在',jd:'困扰你的，往往是自己放不下的执念。'},
 ];
-btnEls['btnQian'].addEventListener('click',()=>{
+function divineQian(){
   const q=QIANS[Math.floor(Math.random()*QIANS.length)];
-  showModal(`<h3>🎋 求签房</h3><span class="qiantong" id="qt">🎋</span>
-    <p id="qtip">摇一摇签筒，看看今日运势…</p><div id="qres"></div>
-    <div class="btns"><button class="btn-primary" id="qb">摇签</button></div>`);
-  const qt=document.getElementById('qt'),tip=document.getElementById('qtip'),res=document.getElementById('qres'),btn=document.getElementById('qb');
+  showModal(`<h3>🎋 观音签</h3><div style="font-size:50px;margin:6px 0;">🎋</div>
+    <p id="qt">摇一摇签筒…</p><div id="qr"></div>
+    <div class="btns"><button class="btn-primary" id="qb">摇签</button><button class="btn-ghost" id="qr2">返回</button></div>`);
+  document.getElementById('qr2').onclick=openDivineMenu;
+  const btn=document.getElementById('qb'),tip=document.getElementById('qt'),res=document.getElementById('qr');
   btn.onclick=()=>{
-    qt.classList.add('shake');playChime();btn.disabled=true;btn.textContent='摇签中…';
+    playChime();btn.disabled=true;btn.textContent='摇签中…';
     setTimeout(()=>{
-      qt.classList.remove('shake');tip.textContent='签文如下';
-      res.innerHTML=`<div class="qianwen">${q.t} · ${q.wen}</div><div class="jieda">🤖 小和尚解签：${q.jd}</div>`;
-      addMerit(5);playChime();
-      btn.textContent='再摇一次';btn.disabled=false;
-      btn.onclick=()=>{closeModal();setTimeout(()=>btnEls['btnQian'].click(),200);};
+      tip.textContent='签文如下';
+      res.innerHTML=`<div class="qianwen">${q.t} · ${q.wen}</div><div class="jieda">🤖 玄机解签：${q.jd}</div>`;
+      addMerit(5);btn.textContent='再摇一次';btn.disabled=false;
+      btn.onclick=()=>{const nq=QIANS[Math.floor(Math.random()*QIANS.length)];res.innerHTML=`<div class="qianwen">${nq.t} · ${nq.wen}</div><div class="jieda">🤖 玄机解签：${nq.jd}</div>`;addMerit(5);playChime();};
     },700);
   };
+}
+const GUAS=[
+  {n:'乾为天',s:'刚健中正，大吉',d:'行事宜刚不宜柔，但戒骄躁。'},
+  {n:'坤为地',s:'柔顺载物，厚德',d:'耐心等待，厚积薄发。'},
+  {n:'水雷屯',s:'初生艰难',d:'起步阶段多阻滞，守正待时。'},
+  {n:'山水蒙',s:'蒙昧待启',d:'多听多学，暂缓决断。'},
+  {n:'水天需',s:'等待时机',d:'不必急，时机未到。'},
+  {n:'天水讼',s:'争讼不利',d:'退一步，避免正面冲突。'},
+  {n:'地水师',s:'统众有方',d:'需纪律与领导力。'},
+  {n:'风天小畜',s:'小有蓄积',d:'积蓄力量，不宜大动作。'},
+  {n:'雷天大壮',s:'壮盛有力',d:'可进取，但防过刚。'},
+  {n:'火地晋',s:'晋升有望',d:'努力将得回报，宜上进。'},
+];
+function divineGua(){
+  showModal(`<h3>☯️ 周易算卦</h3><p>静心默念所问之事，掷三枚铜钱起卦…</p>
+    <div style="font-size:40px;margin:8px 0;">🪙🪙🪙</div><div id="gr"></div>
+    <div class="btns"><button class="btn-primary" id="gb">掷卦</button><button class="btn-ghost" id="gr2">返回</button></div>`);
+  document.getElementById('gr2').onclick=openDivineMenu;
+  const btn=document.getElementById('gb'),res=document.getElementById('gr');
+  btn.onclick=()=>{
+    playChime();btn.disabled=true;btn.textContent='起卦中…';
+    setTimeout(()=>{
+      const gua=GUAS[Math.floor(Math.random()*GUAS.length)];
+      res.innerHTML=`<div class="qianwen">第${Math.floor(Math.random()*64)+1}卦 · ${gua.n}</div><div class="jieda"><b>${gua.s}</b><br>${gua.d}</div>`;
+      addMerit(5);btn.textContent='再起一卦';btn.disabled=false;
+      btn.onclick=()=>{const g=GUAS[Math.floor(Math.random()*GUAS.length)];res.innerHTML=`<div class="qianwen">${g.n}</div><div class="jieda"><b>${g.s}</b><br>${g.d}</div>`;addMerit(5);playChime();};
+    },800);
+  };
+}
+function divineFace(){
+  showModal(`<h3>👤 看相</h3><p>选一项，玄机为你解析</p>
+    <div class="quiz-opts">
+      <button data-f="眉">眉毛</button><button data-f="眼">眼睛</button><button data-f="鼻">鼻梁</button>
+      <button data-f="嘴">嘴唇</button><button data-f="耳">耳朵</button>
+    </div><div class="btns"><button class="btn-ghost" id="fr">返回</button></div>`);
+  document.getElementById('fr').onclick=openDivineMenu;
+  const faceData={
+    '眉':'眉主兄弟与情感。眉清目秀者，人缘佳，重情义；眉浓者，性刚直。',
+    '眼':'眼为心之窗。眼神安定者，心性沉稳，遇事不慌；眼神灵动者，聪慧善思。',
+    '鼻':'鼻主财帛。鼻梁挺直者，中年运势稳；鼻头圆润者，聚财有福。',
+    '嘴':'嘴主晚年与口福。唇厚者，重感情；唇薄者，善言辞。',
+    '耳':'耳主福寿。耳垂厚者，福泽深；耳廓分明者，聪颖好记。'
+  };
+  modalBox.querySelectorAll('.quiz-opts button').forEach(b=>{
+    b.onclick=()=>{
+      const f=b.dataset.f;
+      showModal(`<h3>👤 看相 · ${f}</h3><div class="jieda">${faceData[f]}</div>
+        <p style="font-size:11px;color:#b98a3e;margin-top:8px;">相由心生，仅供参悟</p>
+        <div class="btns"><button class="btn-primary" id="fq">再问一项</button><button class="btn-ghost" id="fc">返回</button></div>`);
+      addMerit(3);playChime();
+      document.getElementById('fq').onclick=divineFace;
+      document.getElementById('fc').onclick=openDivineMenu;
+    };
+  });
+}
+function divineDream(){
+  showModal(`<h3>💭 解梦</h3><p>写下你的梦，玄机为你解</p>
+    <textarea id="drInput" placeholder="例如：梦见水、梦见飞翔、梦见故人…"></textarea>
+    <div class="btns"><button class="btn-primary" id="db">求解</button><button class="btn-ghost" id="dr">返回</button></div>`);
+  document.getElementById('dr').onclick=openDivineMenu;
+  document.getElementById('db').onclick=()=>{
+    const txt=document.getElementById('drInput').value.trim();
+    let out;
+    if(!txt) out='施主未写梦境，如何解呢？';
+    else if(/水|河|海|雨/.test(txt)) out='梦见水，主财与情。水清则运顺，水浊则心乱。';
+    else if(/飞|翔|鸟/.test(txt)) out='梦见飞翔，主志得意满，渴望自由。';
+    else if(/故人|死去|亲人|奶奶|爷爷/.test(txt)) out='梦见故人，是思念与未了情。宜静心追思，勿过度悲戚。';
+    else if(/死|血|哭/.test(txt)) out='梦见死血哭，旧事终结之兆。反是新生，莫惧。';
+    else if(/牙|掉|失/.test(txt)) out='梦见牙掉，主口舌或失去之虑。宜谨慎言辞。';
+    else if(/考试|迟到|找/.test(txt)) out='梦见考试迟到，主现实压力。放宽心，事缓则圆。';
+    else out='此梦意象复杂，玄机以为：静观其变，不必深究。心安即吉。';
+    showModal(`<h3>💭 解梦</h3><div class="jieda">${out}</div>
+      <div class="btns"><button class="btn-primary" id="dq">再解一梦</button><button class="btn-ghost" id="dc">返回</button></div>`);
+    addMerit(4);playChime();
+    document.getElementById('dq').onclick=divineDream;
+    document.getElementById('dc').onclick=openDivineMenu;
+  };
+}
+function divineStar(){
+  const zodiac=['白羊','金牛','双子','巨蟹','狮子','处女','天秤','天蝎','射手','摩羯','水瓶','双鱼'];
+  showModal(`<h3>⭐ 星象</h3><p>选择你的星座，看今日星象</p>
+    <div class="quiz-opts" id="zodOpts"></div>
+    <div class="btns"><button class="btn-ghost" id="zr">返回</button></div>`);
+  document.getElementById('zr').onclick=openDivineMenu;
+  const opts=document.getElementById('zodOpts');
+  for(const z of zodiac){
+    const b=document.createElement('button');b.textContent=z+'座';
+    b.onclick=()=>{
+      const luck=Math.floor(Math.random()*5);
+      const stars=['★☆☆☆☆','★★☆☆☆','★★★☆☆','★★★★☆','★★★★★'][luck];
+      const tips=['宜静不宜动，守心为上。','小有波折，终能化解。','平稳之象，顺其自然。','运势上扬，宜进取。','大吉之象，诸事顺遂。'];
+      showModal(`<h3>⭐ ${z}座 · 今日星象</h3><div class="qianwen">${stars}</div><div class="jieda">${tips[luck]}<br><br><span style="font-size:11px;color:#b98a3e;">星象之说，听之乐之，不可尽信。</span></div><div class="btns"><button class="btn-ghost" id="zc">返回</button></div>`);
+      addMerit(3);playChime();
+      document.getElementById('zc').onclick=openDivineMenu;
+    };
+    opts.appendChild(b);
+  }
+}
+const MBTI_QS=[
+  {q:'周末你更想…',a:'出门聚会，见见朋友',b:'宅家独处，安静充电',d:'EI'},
+  {q:'做决定时你更信…',a:'实在的经验与细节',b:'直觉与未来的可能',d:'SN'},
+  {q:'遇到分歧你更倾向…',a:'讲道理，看逻辑',b:'顾感受，重和谐',d:'TF'},
+  {q:'你的日常更偏向…',a:'计划清晰，按部就班',b:'随性灵活，见招拆招',d:'JP'},
+];
+let mbtiIdx=0,mbtiAns=[];
+function divineMBTI(){mbtiIdx=0;mbtiAns=[];renderMBTI();}
+function renderMBTI(){
+  if(mbtiIdx>=MBTI_QS.length){showMBTIResult();return;}
+  const q=MBTI_QS[mbtiIdx];
+  showModal(`<h3>🧩 人格测试</h3><div class="quiz-progress">第 ${mbtiIdx+1} / ${MBTI_QS.length} 题</div>
+    <div class="quiz-q">${q.q}</div>
+    <div class="quiz-opts"><button id="ma">${q.a}</button><button id="mb">${q.b}</button></div>
+    <div class="btns"><button class="btn-ghost" id="mr">返回</button></div>`);
+  document.getElementById('mr').onclick=openDivineMenu;
+  document.getElementById('ma').onclick=()=>{mbtiAns.push(q.d[0]);mbtiIdx++;renderMBTI();};
+  document.getElementById('mb').onclick=()=>{mbtiAns.push(q.d[1]);mbtiIdx++;renderMBTI();};
+}
+function showMBTIResult(){
+  const type=mbtiAns.join('');
+  const desc={E:'外向',I:'内向',N:'直觉',S:'实感',T:'思考',F:'情感',J:'判断',P:'感知'};
+  const nick={INTJ:'谋略家',INTP:'逻辑家',ENTJ:'指挥官',ENTP:'辩论家',INFJ:'提倡者',INFP:'调停者',ENFJ:'主人公',ENFP:'竞选者',ISTJ:'物流师',ISFJ:'守卫者',ESTJ:'总经理',ESFJ:'执政官',ISTP:'鉴赏家',ISFP:'探险家',ESTP:'企业家',ESFP:'表演者'};
+  showModal(`<h3>🧩 你的人格</h3><div class="qianwen">${type}</div>
+    <p style="font-size:13px;">${type.split('').map(c=>desc[c]).join(' · ')}</p>
+    <div class="jieda">「${nick[type]||'独特之人'}」<br>佛说众生皆有佛性，无论何种性格，皆可成道。接纳自己，便是修行。</div>
+    <div class="btns"><button class="btn-primary" id="mq">再测一次</button><button class="btn-ghost" id="mc">返回</button></div>`);
+  addMerit(6);playChime();
+  document.getElementById('mq').onclick=divineMBTI;
+  document.getElementById('mc').onclick=openDivineMenu;
+}
+
+/* ================= 许愿任务 ================= */
+const TASKS=[
+  {id:'muyu10',name:'诚心敲木鱼',desc:'敲木鱼 10 次',need:10,key:'muyu'},
+  {id:'incense3',name:'上香三炷',desc:'上香 3 次',need:3,key:'incense'},
+  {id:'copy5',name:'静心抄经',desc:'抄经 5 字',need:5,key:'copy'},
+  {id:'release1',name:'慈悲放生',desc:'放生 1 条锦鲤',need:1,key:'release'},
+  {id:'walk100',name:'绕寺行走',desc:'在寺中行走 100 米',need:100,key:'walk'},
+];
+let currentTask=null;
+function startWishTask(){
+  if(currentTask&&currentTask.progress>=currentTask.need){openWishFinal();return;}
+  if(!currentTask){const t=TASKS[Math.floor(Math.random()*TASKS.length)];currentTask={...t,progress:0};}
+  renderTaskPanel();
+}
+function renderTaskPanel(){
+  const t=currentTask;
+  const pct=Math.min(100,t.progress/t.need*100);
+  showModal(`<h3>🌳 许愿 · 需先完成一桩善行</h3>
+    <div class="task-card">
+      <div class="tname">${t.name}</div>
+      <div class="tdesc">${t.desc}（${t.progress}/${t.need}）</div>
+      <div class="task-bar"><i style="width:${pct}%"></i></div>
+    </div>
+    <p style="font-size:11px;color:#b98a3e;">完成任务后，愿望方得圆满</p>
+    <div class="btns"><button class="btn-primary" id="tw">去完成</button><button class="btn-ghost" id="tc">稍后</button></div>`);
+  document.getElementById('tw').onclick=closeModal;
+  document.getElementById('tc').onclick=closeModal;
+}
+function taskProgress(key,amount){
+  if(!currentTask||currentTask.key!==key)return;
+  currentTask.progress=Math.min(currentTask.need,currentTask.progress+amount);
+  if(currentTask.progress>=currentTask.need){toast('✅ 善行圆满，可去许愿了');}
+}
+function openWishFinal(){
+  showModal(`<h3>🌳 许愿</h3><p>善行圆满，写下心愿，红绸将替你系上…</p>
+    <textarea id="w2" placeholder="愿…"></textarea>
+    <div class="btns"><button class="btn-ghost" id="c2">取消</button><button class="btn-primary" id="o2">系上红绸</button></div>`);
+  document.getElementById('c2').onclick=closeModal;
+  document.getElementById('o2').onclick=()=>{
+    const w=document.getElementById('w2').value.trim();
+    playChime();addMerit(10);closeModal();
+    currentTask=null;
+    toast(w?'🌳 红绸已系上，愿你所求皆如愿，功德+10':'🌳 愿望已上达，功德+10');
+  };
+}
+btnEls['btnWish'].addEventListener('click',startWishTask);
+btnEls['btnDivine'].addEventListener('click',openDivineMenu);
+
+/* ================= 放生/供灯/抄经 ================= */
+btnEls['btnRelease'].addEventListener('click',()=>{
+  playChime();addMerit(3);taskProgress('release',1);
+  const fish=new THREE.Mesh(new THREE.SphereGeometry(0.2,10,10),mat(0xe8622a));
+  fish.position.set(16+2,0.3,8+1);scene.add(fish);
+  let ft=0;
+  const fishAnim=setInterval(()=>{
+    ft+=0.05;fish.position.x=16+Math.cos(ft)*3;fish.position.z=8+Math.sin(ft)*3;fish.rotation.y=-ft;
+    if(ft>6){clearInterval(fishAnim);scene.remove(fish);}
+  },50);
+  const s=worldToScreen(new THREE.Vector3(16,1,8));
+  floatAt(s.x,s.y,'放生 +3','#7bd3ff');
+  toast('🐟 锦鲤入水，功德+3');
 });
+btnEls['btnLight'].addEventListener('click',()=>{
+  playChime();addMerit(2);
+  for(const slot of lampSlots){if(!slot.lit){slot.lit=true;slot.flame.visible=true;slot.flame.material=mat(0xffd76a,{emissive:0xffaa44,emissiveIntensity:1.2});const pl=new THREE.PointLight(0xffaa44,0.6,3);pl.position.copy(slot.group.position).add(new THREE.Vector3(0,0.3,0));scene.add(pl);}}
+  const s=worldToScreen(new THREE.Vector3(0,1.5,10));
+  floatAt(s.x,s.y,'供灯 +2','#ffd76a');
+  toast('🏮 灯灯相续，功德+2');
+});
+btnEls['btnCopy'].addEventListener('click',()=>{
+  showModal(`<h3>📜 抄经</h3><p>静心抄写，点字得功德 +1</p><div class="copy-grid" id="copyGrid"></div><div class="btns"><button class="btn-ghost" id="cc2">结束</button></div>`);
+  const chars='心经波罗蜜多时照见五蕴皆空度一切苦厄舍利子色不异空空不异色';
+  const grid=document.getElementById('copyGrid');
+  for(const ch of chars){
+    const b=document.createElement('button');b.textContent=ch;
+    b.onclick=()=>{if(b.disabled)return;b.disabled=true;playDong();addMerit(1);taskProgress('copy',1);};
+    grid.appendChild(b);
+  }
+  document.getElementById('cc2').onclick=closeModal;
+});
+
+/* ================= 木鱼/跪拜/上香 ================= */
+btnEls['btnMuyu'].addEventListener('click',()=>{playDong();addMerit(1);taskProgress('muyu',1);hammer.rotation.z=-0.9;setTimeout(()=>hammer.rotation.z=-0.4,150);muyuBody.scale.set(1.12,0.78,1.12);setTimeout(()=>muyuBody.scale.set(1,0.85,1),120);const s=worldToScreen(new THREE.Vector3(-6,1.2,18));floatAt(s.x,s.y,'功德 +1','#ffd76a');});
+btnEls['btnBow'].addEventListener('click',()=>{playChime();addMerit(3);halo.material.emissiveIntensity=2;setTimeout(()=>halo.material.emissiveIntensity=0.6,700);const s=worldToScreen(new THREE.Vector3(0,3,-5));floatAt(s.x,s.y,'诚心 +3','#ffe08a');toast('🙏 诚心叩拜，佛光普照');});
+btnEls['btnIncense'].addEventListener('click',()=>{
+  showModal(`<h3>🕯️ 上香祈福</h3><p>写下心愿，香烟替你传达…</p><textarea id="wi" placeholder="愿家人平安健康…"></textarea><div class="btns"><button class="btn-ghost" id="c">取消</button><button class="btn-primary" id="o">上香</button></div>`);
+  document.getElementById('c').onclick=closeModal;
+  document.getElementById('o').onclick=()=>{const w=document.getElementById('wi').value.trim();playChime();addMerit(2);taskProgress('incense',1);closeModal();toast(w?'🕯️ 心愿已随香烟上达':'🕯️ 上香完毕，功德+2');};
+});
+
+/* ================= NPC 对话 ================= */
 const BOT_REPLIES=[
   {k:['烦恼','累','压力','难受','难过'],r:'阿弥陀佛，烦恼即菩提。说出来，心里就轻些了。'},
   {k:['钱','穷','工作','失业','工资'],r:'身外之物，来去有时。先把今日饭吃好、觉睡好。'},
@@ -582,7 +769,7 @@ const BOT_REPLIES=[
   {k:['考试','学习','成绩'],r:'功不唐捐。每天专注一小步，比焦虑一大片更有用。'},
   {k:['保佑','祈福','平安'],r:'心诚则灵。愿你与家人皆平安。'},
   {k:['你好','hi','在吗','hello'],r:'阿弥陀佛，施主好。今日可去求签房看看。'},
-  {k:['签','求签'],r:'求签房在西边，找解签僧摇一签吧。'},
+  {k:['签','求签','卦','占卜'],r:'求签房在西边，找解签僧玄机，六术皆可问。'},
   {k:['谢谢','感谢'],r:'不必言谢，善念已在心中种下。'},
 ];
 const DEF=['嗯…小僧在听，多说一点？','阿弥陀佛，一切都会慢慢好起来。','心若安处，便是归处。','先深呼吸，再回头看看，也许没那么难。'];
@@ -590,6 +777,7 @@ let chatHistory=[];
 btnEls['btnNPC'].addEventListener('click',()=>{
   if(!nearNPC)return;
   const who=nearNPC;
+  if(who.isDiviner){openDivineMenu();return;}
   showModal(`<h3>💬 ${who.name}</h3><div class="chat-log" id="cl"></div><div class="chat-input-row"><input id="ci" placeholder="说说话…"/><button id="cs">发送</button></div><div class="btns"><button class="btn-ghost" id="cc">关闭</button></div>`);
   const log=document.getElementById('cl');
   chatHistory.forEach(m=>{const d=document.createElement('div');d.className='msg '+m.role;d.textContent=m.text;log.appendChild(d);});
@@ -646,33 +834,23 @@ function currentZone(){
   return '庭院';
 }
 
-/* ================= 建筑透明化 ================= */
+/* ================= 建筑透明 ================= */
 function updateBuildingsTransparency(){
   for(const b of buildings){
-    const dx=Math.abs(state.pos.x-b.cx);
-    const dz=Math.abs(state.pos.z-b.cz);
-    const inside = dx<b.rx && dz<b.rz;
-    if(inside !== b.transparent){
-      b.transparent = inside;
-      const opacity = inside ? 0.22 : 1;
-      for(const m of b.walls){
-        m.material.transparent = inside;
-        m.material.opacity = opacity;
-        m.material.depthWrite = !inside;
-        m.material.needsUpdate = true;
-      }
-      for(const m of b.roofs){
-        m.material.transparent = inside;
-        m.material.opacity = opacity;
-        m.material.depthWrite = !inside;
-        m.material.needsUpdate = true;
-      }
+    const dx=Math.abs(state.pos.x-b.cx),dz=Math.abs(state.pos.z-b.cz);
+    const inside=dx<b.rx&&dz<b.rz;
+    if(inside!==b.transparent){
+      b.transparent=inside;
+      const opacity=inside?0.22:1;
+      for(const m of b.walls){m.material.transparent=inside;m.material.opacity=opacity;m.material.depthWrite=!inside;m.material.needsUpdate=true;}
+      for(const m of b.roofs){m.material.transparent=inside;m.material.opacity=opacity;m.material.depthWrite=!inside;m.material.needsUpdate=true;}
     }
   }
 }
 
 /* ================= 主循环 ================= */
 const clock=new THREE.Clock();
+let walkAccum=0;
 function animate(){
   requestAnimationFrame(animate);
   const dt=Math.min(clock.getDelta(),0.05);
@@ -688,9 +866,11 @@ function animate(){
   const mv=new THREE.Vector3().addScaledVector(camR,mx).addScaledVector(camF,-mz);
   if(mv.lengthSq()>0.001){
     mv.normalize();
-    state.pos.x+=mv.x*state.speed*dt;
-    state.pos.z+=mv.z*state.speed*dt;
+    const step=state.speed*dt;
+    state.pos.x+=mv.x*step;state.pos.z+=mv.z*step;
     state.yaw=Math.atan2(mv.x,mv.z);
+    walkAccum+=step;
+    if(walkAccum>2){taskProgress('walk',Math.floor(walkAccum));walkAccum-=Math.floor(walkAccum);}
   }
   state.pos.x=Math.max(-25,Math.min(25,state.pos.x));
   state.pos.z=Math.max(-29,Math.min(31,state.pos.z));
@@ -711,7 +891,7 @@ function animate(){
     }
   }
   player.position.set(state.pos.x,0,state.pos.z);
-  player.rotation.y=state.yaw+Math.PI;
+  player.rotation.y=state.yaw;
   if(state.moving){state.walkT+=dt*12;player.position.y=Math.abs(Math.sin(state.walkT))*0.09;player.rotation.z=Math.sin(state.walkT)*0.07;}
   else{state.walkT=0;player.position.y=0;player.rotation.z=0;}
   const camTarget=new THREE.Vector3(state.pos.x,1.4,state.pos.z);
@@ -726,7 +906,7 @@ function animate(){
       const gz=n.walk.z1+(n.walk.z2-n.walk.z1)*k;
       const dir=new THREE.Vector3(n.walk.x2-n.walk.x1,0,n.walk.z2-n.walk.z1).normalize();
       n.group.position.set(gx,0,gz);
-      n.group.rotation.y=Math.atan2(dir.x,dir.z)+Math.PI;
+      n.group.rotation.y=Math.atan2(dir.x,dir.z);
       n.pos.set(gx,0,gz);
       n.group.position.y=Math.abs(Math.sin(n.walkT*8))*0.05;
     }
@@ -743,7 +923,7 @@ function animate(){
 }
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 let lp=0;const loadBar=document.getElementById('loadBar');
-const lt=setInterval(()=>{lp+=14;loadBar.style.width=Math.min(lp,100)+'%';if(lp>=100){clearInterval(lt);setTimeout(()=>document.getElementById('loading').classList.add('hide'),300);}},120);
+const lt=setInterval(()=>{lp+=12;loadBar.style.width=Math.min(lp,100)+'%';if(lp>=100){clearInterval(lt);setTimeout(()=>document.getElementById('loading').classList.add('hide'),300);}},120);
 animate();
 document.body.addEventListener('touchstart',()=>getCtx(),{once:true});
 </script>
